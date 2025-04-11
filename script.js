@@ -30,9 +30,13 @@ const scene = new THREE.Scene();
 // add the orbit controls to the camera
 const controls = new OrbitControls(camera, renderer.domElement);
 // disable controls to zoom in and out
-controls.enableZoom = false;
-controls.enableDamping = true; // an animation effect when you stop dragging
-controls.dampingFactor = 0.05; // the speed of the animation effect
+controls.minDistance = 1.2
+controls.maxDistance = 5
+
+// an animation effect when you stop dragging
+controls.enableDamping = true; 
+// the speed of the animation effect
+controls.dampingFactor = 0.05;
 
 // create a geometry (primitive shape) to add it to the scene
 const geo = new THREE.IcosahedronGeometry(1, 5)
