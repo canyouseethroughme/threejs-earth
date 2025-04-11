@@ -1,5 +1,7 @@
 import * as THREE from "three";
+import { FontLoader } from 'jsm/loaders/FontLoader.js';
 import { OrbitControls } from 'jsm/controls/OrbitControls.js';
+import { TextGeometry } from 'jsm/geometries/TextGeometry.js';
 
 import { getStarfield, getFresnelMat } from "./utils.js";
 
@@ -59,6 +61,30 @@ const cloudsMesh = new THREE.Mesh(geometry, cloudsMat);
 cloudsMesh.scale.setScalar(1.003);
 earthGroup.add(cloudsMesh);
 
+// Load the font
+const fontLoader = new FontLoader();
+fontLoader.load('./assets/raleway.json', (font) => {
+    // Create text geometry
+    const textGeometry = new TextGeometry('hello world!', {
+        font: font,
+        size: 0.5, // Size of the text
+        height: 0.3, // Depth of the text
+        curveSegments: 12,
+        bevelEnabled: true,
+        bevelThickness: 0.03,
+        bevelSize: 0.05,
+    });
+
+    // Create a material for the text
+    const textMaterial = new THREE.MeshStandardMaterial({ color: '#fff44f' });
+    const textMesh = new THREE.Mesh(textGeometry, textMaterial);
+
+    // Position the text
+    textMesh.position.set(-1.75, 1.5, 0);
+
+    // Add the text to the scene
+    scene.add(textMesh);
+});
 const fresnelMat = getFresnelMat();
 const glowMesh = new THREE.Mesh(geometry, fresnelMat);
 glowMesh.scale.setScalar(1.01);
